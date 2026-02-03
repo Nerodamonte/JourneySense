@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'create_password_screen.dart';
+import 'reset_password_screen.dart'; // Thêm import
 
 class VerifyOtpScreen extends StatefulWidget {
   final String email;
+  final bool isResetPassword; // Thêm parameter này
 
-  const VerifyOtpScreen({super.key, required this.email});
+  const VerifyOtpScreen({
+    super.key,
+    required this.email,
+    this.isResetPassword = false, // Default là false
+  });
 
   @override
   State<VerifyOtpScreen> createState() => _VerifyOtpScreenState();
@@ -189,9 +196,37 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                 height: 52,
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: Verify OTP
                     String otp = _otpControllers.map((c) => c.text).join();
-                    print('OTP entered: $otp');
+
+                    if (otp.length != 6) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Please enter complete OTP'),
+                        ),
+                      );
+                      return;
+                    }
+
+                    // Navigate based on flow type
+                    if (widget.isResetPassword) {
+                      // Reset password flow
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ResetPasswordScreen(email: widget.email),
+                        ),
+                      );
+                    } else {
+                      // Sign up flow
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              CreatePasswordScreen(email: widget.email),
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFC0C0C0),

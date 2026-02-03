@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'forgot_password_emai_screen.dart'; // Thêm import
+import 'package:journey_sense/features/onboarding/presentation/screens/quiz_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -163,7 +165,12 @@ class _SignInScreenState extends State<SignInScreen> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {
-                    // TODO: Navigate to forgot password
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ForgotPasswordScreen(),
+                      ),
+                    );
                   },
                   child: const Text(
                     'Forgot password?',
@@ -179,7 +186,37 @@ class _SignInScreenState extends State<SignInScreen> {
                 height: 52,
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: Handle login
+                    // Validate inputs
+                    if (_emailController.text.isEmpty ||
+                        _passwordController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Please enter email and password'),
+                        ),
+                      );
+                      return;
+                    }
+
+                    // TODO: Call API to authenticate
+                    print('Email: ${_emailController.text}');
+                    print('Password: ${_passwordController.text}');
+
+                    // Show success message
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Login successful!'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+
+                    // Navigate to Quiz Screen
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const QuizScreen(),
+                      ),
+                      (route) => false, // Clear all previous routes
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFC0C0C0),
