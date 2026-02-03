@@ -2,7 +2,7 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '../widgets/social_sign_up_button.dart';
+import 'social_sign_up_button.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});

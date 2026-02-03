@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../widgets/social_sign_up_button.dart';
+import 'sign_in_screen.dart';
+import 'sign_up_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -66,10 +68,17 @@ class WelcomeScreen extends StatelessWidget {
               const SizedBox(height: 32),
 
               // Gmail button
+              // Gmail button
               SocialSignUpButton(
-                icon: 'assets/images/google_icon.png', // hoặc dùng Icon widget
                 label: 'Sign up with Gmail',
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SignUpScreen(),
+                    ),
+                  );
+                },
                 isGoogle: true,
               ),
               const SizedBox(height: 16),
@@ -91,26 +100,6 @@ class WelcomeScreen extends StatelessWidget {
               const SizedBox(height: 24),
 
               // Terms
-              RichText(
-                textAlign: TextAlign.center,
-                text: const TextSpan(
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
-                  children: [
-                    TextSpan(text: 'By continuing, you agree to our '),
-                    TextSpan(
-                      text: 'Terms of Service',
-                      style: TextStyle(decoration: TextDecoration.underline),
-                    ),
-                    TextSpan(text: ' and '),
-                    TextSpan(
-                      text: 'Privacy Policy',
-                      style: TextStyle(decoration: TextDecoration.underline),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 40),
-
               // Sign in link
               RichText(
                 text: TextSpan(
@@ -123,11 +112,20 @@ class WelcomeScreen extends StatelessWidget {
                         color: Color(0xFFD4A574),
                         fontWeight: FontWeight.bold,
                       ),
-                      recognizer: TapGestureRecognizer()..onTap = () {},
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SignInScreen(),
+                            ),
+                          );
+                        },
                     ),
                   ],
                 ),
               ),
+              const SizedBox(height: 40),
             ],
           ),
         ),
